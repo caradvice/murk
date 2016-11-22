@@ -130,7 +130,7 @@ module Murk
 
       def describe
         stacks = APICache.get("stack_#{qualified_name}", cache: 10, valid: 30, period: 30) do
-          cloudformation.describe_stacks(stack_name: qualified_name)[:stacks]
+          cloudformation.describe_stacks.stacks.select { |s| s if s.stack_name == qualified_name }
         end
         stacks || []
       end
